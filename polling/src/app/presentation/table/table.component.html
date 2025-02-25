@@ -1,0 +1,58 @@
+<div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido Paterno</th>
+          <th>Apellido Materno</th>
+          <th>Edad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chofer of choferes">
+          <td>{{ chofer.id }}</td>
+          <td>{{ chofer.nombre }}</td>
+          <td>{{ chofer.apellido_p }}</td>
+          <td>{{ chofer.apellido_m }}</td>
+          <td>{{ chofer.edad }}</td>
+          <td>
+            <button (click)="openModal('update', chofer)" class="btn btn-warning">Editar</button>
+            <button *ngIf="chofer.id !== undefined" (click)="onDeleteChofer(chofer.id)" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button (click)="openModal('add')" class="btn btn-primary">Agregar Chofer</button>
+  </div>
+  
+  <!-- Modal -->
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <h2 *ngIf="modalMode === 'add'">Agregar Chofer</h2>
+      <h2 *ngIf="modalMode === 'update'">Actualizar Chofer</h2>
+  
+      <form [formGroup]="choferForm" (ngSubmit)="onSubmit()">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" formControlName="nombre" />
+  
+        <label for="apellido_p">Apellido Paterno:</label>
+        <input id="apellido_p" formControlName="apellido_p" />
+  
+        <label for="apellido_m">Apellido Materno:</label>
+        <input id="apellido_m" formControlName="apellido_m" />
+  
+        <label for="edad">Edad:</label>
+        <input id="edad" type="number" formControlName="edad" />
+  
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button (click)="closeModal()" type="button" class="btn btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  
